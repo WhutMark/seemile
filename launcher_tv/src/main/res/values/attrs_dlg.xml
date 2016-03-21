@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="compat_dlg_title" type="id" />
+    <item name="compat_dlg_message" type="id" />
+    <item name="compat_dlg_title_panel" type="id" />
+    <item name="compat_dlg_content_panel" type="id" />
+    <item name="compat_dlg_custom_panel" type="id" />
+    <item name="compat_dlg_btn_panel" type="id" />
+    <item name="compat_dlg_negative_btn" type="id" />
+    <item name="compat_dlg_positive_btn" type="id" />
+    <item name="compat_dlg_neutral_btn" type="id" />
+
+
+    <attr name="compatDialogStyle" format="reference" />
+    <attr name="compatTitleTextStyle" format="reference" />
+    <attr name="compatMsgTextStyle" format="reference" />
+    <attr name="compatPositiveBtnStyle" format="reference" />
+    <attr name="compatNegativeBtnStyle" format="reference" />
+    <attr name="compatNeutralBtnStyle" format="reference" />
+    <attr name="compatBtnBarStyle" format="reference" />
+
+    <declare-styleable name="CompatDialog">
+        <attr name="layout"  />
+        <attr name="customLayout" format="reference" />
+    </declare-styleable>
+
+</resources>

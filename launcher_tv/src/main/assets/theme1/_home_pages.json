@@ -1,0 +1,180 @@
+{
+  "pages": [
+    {
+      "id": 1000,
+      "title": "首页",
+      "items": [
+        {
+          "id": 1001,
+          "title": "图片浏览",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 0,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_gallery.png",
+          "bgUrl": "",
+          "url":""
+        },
+        {
+          "id": 1002,
+          "title": "视频播放",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 1,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_video_play.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1003,
+          "title": "文档播放",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 2,
+          "cellY": 0,
+          "spanX": 2,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_file.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1004,
+          "title": "网易公开课",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 4,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_netease_open_class.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1005,
+          "title": "沪江英语",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 5,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_hujiang_english.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1006,
+          "title": "None",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 0,
+          "cellY": 1,
+          "spanX": 2,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_none1.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1007,
+          "title": "天气预报",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 2,
+          "cellY": 1,
+          "spanX": 2,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_weather.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1008,
+          "title": "None2",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 4,
+          "cellY": 1,
+          "spanX": 2,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_none2.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1009,
+          "title": "乐学名师课堂",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 0,
+          "cellY": 2,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_lexue.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1010,
+          "title": "义方快乐学堂",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 1,
+          "cellY": 2,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_yifang.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1011,
+          "title": "多屏互动",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 2,
+          "cellY": 2,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_multi_screen.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1012,
+          "title": "系统设置",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 3,
+          "cellY": 2,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_system_settings.png",
+          "bgUrl": ""
+        },
+        {
+          "id": 1013,
+          "title": "全部应用",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 4,
+          "cellY": 2,
+          "spanX": 2,
+          "spanY": 1,
+          "iconUrl": "assets://theme1/icon/ic_all_apps.png",
+          "bgUrl": ""
+        }
+      ]
+    }
+  ]
+}

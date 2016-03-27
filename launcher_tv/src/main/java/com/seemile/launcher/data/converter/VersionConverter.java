@@ -12,6 +12,10 @@ public class VersionConverter implements JsonConverter<Version> {
 
     @Override
     public Version from(JSONObject source) throws ConverterException {
-        return null;
+        String description = source.optString("description");
+        String serviceVersion = Integer.toString(source.optInt("romVersion"));
+        String downloadUrl = source.optString("filePath");
+        long fileSize = source.optLong("fileSize");
+        return Version.valueOf(serviceVersion, description, downloadUrl, "", fileSize);
     }
 }

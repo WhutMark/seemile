@@ -37,9 +37,9 @@ public class GenericEngine<T> extends OkHttpEngine {
     static {
         sHttpClient = new OkHttpClient();
 
-        sHttpClient.setConnectTimeout(5, TimeUnit.SECONDS);
-        sHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
-        sHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
+        sHttpClient.setConnectTimeout(20, TimeUnit.SECONDS);
+        sHttpClient.setReadTimeout(20, TimeUnit.SECONDS);
+        sHttpClient.setWriteTimeout(20, TimeUnit.SECONDS);
     }
 
     public GenericEngine(RequestProtocol protocol, DataConverter dataConverter) {
@@ -66,9 +66,6 @@ public class GenericEngine<T> extends OkHttpEngine {
             }
         }
         okBuilder.url(url.toString())
-                .addHeader(BMOB_APPLICATION_ID, VALUE_BMOB_APPLICATION_ID)
-                .addHeader(BMOB_REST_API_KEY, VALUE_BMOB_REST_API_KEY)
-                .addHeader(CONTENT_TYPE, VALUE_CONTENT_TYPE)
                 .method(getOkMethod(), getOkRequestBody());
         return okBuilder.build();
     }

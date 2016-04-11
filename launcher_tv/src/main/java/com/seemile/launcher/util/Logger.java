@@ -21,6 +21,12 @@ public class Logger {
         }
     }
 
+    public static void w(String tag, String msg, Throwable er) {
+        if (DEBUG) {
+            Log.w(tag, msg, er);
+        }
+    }
+
     public static void v(String tag, String msg) {
         if (DEBUG) {
             Log.v(tag, msg);

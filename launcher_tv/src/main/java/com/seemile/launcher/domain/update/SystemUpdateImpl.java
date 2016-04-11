@@ -6,6 +6,7 @@ import com.seemile.launcher.domain.interactor.SystemUpdateInteractor;
 import com.seemile.launcher.net.DownloadEngine;
 import com.seemile.launcher.net.GenericEngine;
 import com.seemile.launcher.net.RequestProtocol;
+import com.seemile.launcher.util.SystemUtils;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -22,7 +23,8 @@ class SystemUpdateImpl implements SystemUpdateInteractor {
     public Observable<Version> checkNewVersion(String uniqueId, String localVersion, String channel) {
 
         RequestProtocol requestProtocol = new RequestProtocol.Builder(ENDPOINT + "/os/rom/getNewestRom.do")
-                .addParameter("category", CHANNEL)
+                .addParameter("category", channel)
+                .addParameter("version", localVersion)
                 .build();
         return new GenericEngine<Version>(requestProtocol, new VersionConverter()).start();
     }

@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 
 import com.seemile.launcher.R;
@@ -15,7 +17,9 @@ import java.util.List;
 /**
  * Created by whuthm on 2016/1/7.
  */
-public class AppUtils {
+public class AppUtils extends AbsUtils {
+
+    private volatile static PackageManager sPM;
 
     public static boolean isMainProcess(Context context) {
         boolean result = true;
@@ -62,6 +66,36 @@ public class AppUtils {
             ToastWrapper.show(R.string.activity_not_found);
         } catch (SecurityException e) {
             ToastWrapper.show(R.string.activity_not_found);
+        }
+    }
+
+    public static List<ResolveInfo> getAppLauncherInfo(String packageName) {
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setPackage(packageName);
+        return getResolveInfoList(intent);
+    }
+
+    public static List<ResolveInfo> getAllAppLauncherInfo() {
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        return getResolveInfoList(intent);
+    }
+
+
+    static List<ResolveInfo> getResolveInfoList(Intent intent) {
+        ensurePackageManager();
+        return sPM.queryIntentActivities(intent, 0);
+    }
+
+
+    private static void ensurePackageManager() {
+        if (sPM == null) {
+            synchronized (PackageManager.class) {
+                if (sPM == null) {
+                    sPM = sContext.getPackageManager();
+                }
+            }
         }
     }
 

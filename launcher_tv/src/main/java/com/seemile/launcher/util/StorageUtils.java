@@ -5,9 +5,12 @@ import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.text.TextUtils;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,7 +21,6 @@ public class StorageUtils {
     private static final String TAG = "USBStorageUtils";
 
     private StorageUtils() {
-
     }
 
     static Object methodReflexInvoke(String method, Object receiver,
@@ -53,7 +55,7 @@ public class StorageUtils {
 
                     // 如果 不是mounted状态，忽略
                     String state = (String) methodReflexInvoke("getState", o);
-                    if (!state.equals(Environment.MEDIA_MOUNTED))
+                    if (!Environment.MEDIA_MOUNTED.equals(state))
                         continue;
 
                     // 如果是 primary 忽略 sdcard是primary
@@ -63,6 +65,7 @@ public class StorageUtils {
 //                        continue;
 //                    }
                     String path = (String) methodReflexInvoke("getPath", o);
+                    Logger.i(TAG, "getAllMountedPaths path: " + path);
                     if (!TextUtils.isEmpty(path)) {
                         mountedPaths.add(path);
                     }
@@ -76,9 +79,25 @@ public class StorageUtils {
 
     public static List<String> getAllMountedPathsWithoutSDCard(Context context) {
         List<String> mountedPaths = getAllMountedPaths(context);
-        mountedPaths.remove(Environment.getExternalStorageDirectory().getPath());
+        int size = mountedPaths.size();
+        int i = 0;
+        while (i < size) {
+            String path = mountedPaths.get(i);
+            String[] filenames = new File(path).list(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String filename) {
+                    return filename.startsWith("udisk") && new File(dir, filename).isDirectory();
+                }
+            });
+            if (filenames != null) {
+                for (String filename : filenames) {
+                    Logger.i(TAG, filename);
+                    mountedPaths.add(path + File.separator + filename);
+                }
+            }
+            i++;
+        }
         return mountedPaths;
     }
-
 
 }

@@ -10,7 +10,6 @@ import com.seemile.launcher.domain.update.SystemUpdateService;
 import com.seemile.launcher.domain.update.UpdateInfo;
 import com.seemile.launcher.util.Logger;
 import com.seemile.launcher.util.StorageUtils;
-import com.seemile.launcher.util.ToastWrapper;
 
 import java.io.File;
 import java.util.List;
@@ -20,18 +19,14 @@ import java.util.List;
  */
 public class SystemUpdatePresenter extends Presenter<SystemUpdatePresenter.View> {
 
-
     private SystemUpdateService mSystemUpdateService;
 
     private static final String TAG = "SystemLocalUpdatePresenter";
-
-    private static final String ROM_FILE_NAME = "rom.zip";
 
     private BroadcastReceiver usbReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Logger.i(TAG, intent.getAction());
-            ToastWrapper.show(intent.getAction());
             showLocalUpdateIfNeeded();
         }
     };
@@ -39,7 +34,8 @@ public class SystemUpdatePresenter extends Presenter<SystemUpdatePresenter.View>
     private void showLocalUpdateIfNeeded() {
         List<String> mountedPaths = StorageUtils.getAllMountedPathsWithoutSDCard(view.getContext());
         for (String path : mountedPaths) {
-            File romFile = new File(path, ROM_FILE_NAME);
+            File romFile = new File(path, SystemUpdateService.ROM_FILE_NAME);
+            Logger.i(TAG, "showLocalUpdateIfNeeded : " + romFile.getPath() + " " + romFile.exists());
             if (romFile.exists()) {
                 if (view != null) {
                     view.showLocalUpdate(romFile.getPath());
@@ -65,6 +61,7 @@ public class SystemUpdatePresenter extends Presenter<SystemUpdatePresenter.View>
     @Override
     public void onViewAttached(@NonNull View view) {
         super.onViewAttached(view);
+        Logger.i(TAG, "onViewAttached registerReceiver");
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         filter.addAction(Intent.ACTION_MEDIA_CHECKING);

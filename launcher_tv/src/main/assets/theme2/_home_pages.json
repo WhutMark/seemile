@@ -16,7 +16,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_movies_play.png",
           "bgUrl": "",
-          "url":"app://com.android.contacts/com.android.contacts.activities.DialtactsActivity"
+          "url":"app://android.rk.RockVideoPlayer"
         },
         {
           "id": 1002,
@@ -29,7 +29,8 @@
           "spanX": 1,
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_game.png",
-          "bgUrl": ""
+          "bgUrl": "",
+          "url": "app://"
         },
         {
           "id": 1003,
@@ -42,7 +43,8 @@
           "spanX": 1,
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_all_apps.png",
-          "bgUrl": ""
+          "bgUrl": "",
+          "url": "app://com.rk_itvui.allapp"
         },
         {
           "id": 1004,
@@ -55,7 +57,8 @@
           "spanX": 1,
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_usb_play.png",
-          "bgUrl": ""
+          "bgUrl": "",
+          "url": "app://com.android.rockchip"
         },
         {
           "id": 1005,
@@ -68,7 +71,9 @@
           "spanX": 1,
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_dlna.png",
-          "bgUrl": ""
+          "bgUrl": "",
+          "url": "app://com.rockchip.wfd"
+
         },
         {
           "id": 1006,
@@ -81,7 +86,8 @@
           "spanX": 1,
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_system_settings.png",
-          "bgUrl": ""
+          "bgUrl": "",
+          "url": "app://com.rk_itvui.settings"
         }
       ]
     }

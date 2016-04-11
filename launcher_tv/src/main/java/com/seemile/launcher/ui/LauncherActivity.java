@@ -108,7 +108,7 @@ public class LauncherActivity extends PresenterActivity<SystemUpdatePresenter.Vi
     public void onClick(View v) {
         Logger.i(TAG, "onClick");
         if (v.getTag() instanceof HomeInfo) {
-            //AppUtils.startActivitySafely(this, ((HomeInfo) v.getTag()).getIntent());
+            AppUtils.startActivitySafely(this, ((HomeInfo) v.getTag()).getIntent());
         }
     }
 

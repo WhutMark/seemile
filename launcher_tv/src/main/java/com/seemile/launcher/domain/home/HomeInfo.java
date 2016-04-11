@@ -1,16 +1,20 @@
 package com.seemile.launcher.domain.home;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
 import com.seemile.launcher.R;
 import com.seemile.launcher.domain.ItemInfo;
+import com.seemile.launcher.util.AppUtils;
 import com.seemile.launcher.util.AssetsUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by whuthm on 2016/2/4.
@@ -58,18 +62,30 @@ public class HomeInfo extends ItemInfo {
     }
 
     public Intent getIntent() {
-        Intent intent = new Intent();
         if (!TextUtils.isEmpty(url) && url.startsWith("app://")) {
             String name = url.substring("app://".length(), url.length());
             String[] components = name.split("/");
             if (components != null) {
                 if (components.length > 1) {
-                    intent.setClassName(components[0], components[1]);
+                    return getActivity(new ComponentName(components[0], components[1]));
                 } else if (components.length > 0) {
-                    intent.setPackage(components[0]);
+                    String packageName = components[0];
+                    List<ResolveInfo> resolveInfoList = AppUtils.getAppLauncherInfo(packageName);
+                    if (resolveInfoList != null && resolveInfoList.size() > 0) {
+                        ResolveInfo info = resolveInfoList.get(0);
+                        return getActivity(new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name));
+                    }
                 }
             }
         }
+        return new Intent();
+    }
+
+    final Intent getActivity(ComponentName className) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setComponent(className);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         return intent;
     }
 

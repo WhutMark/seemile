@@ -14,6 +14,7 @@ import com.seemile.launcher.util.AppUtils;
 import com.seemile.launcher.util.ExecutorUtils;
 import com.seemile.launcher.util.Logger;
 import com.seemile.launcher.util.NetworkUtils;
+import com.seemile.launcher.util.SystemUtils;
 
 import java.io.File;
 import java.util.Timer;
@@ -28,7 +29,9 @@ public class SystemUpdateService {
 
     private static final String TAG = "SystemUpdateService";
 
-    private static String DOWNLOAD_FILE_NAME;
+    public static String DOWNLOAD_FILE_PATH;
+
+    public static final String ROM_FILE_NAME = "rom.zip";
 
     private Context context;
 
@@ -38,7 +41,7 @@ public class SystemUpdateService {
 
     private UpdateInfo updateInfo;
 
-    private final String localVersion = "1.0";
+    private final String localVersion;
 
     private boolean isChecking;
 
@@ -49,9 +52,10 @@ public class SystemUpdateService {
     private SystemUpdateService(Context context) {
         this.context = context.getApplicationContext();
 
-        DOWNLOAD_FILE_NAME = context.getCacheDir() + "/rom.apk";
+        DOWNLOAD_FILE_PATH = context.getCacheDir() + "/" + ROM_FILE_NAME;
         interactor = new SystemUpdateImpl();
         localStore = new SystemUpdateLocalStore(this.context);
+        localVersion = SystemUtils.getVersion();
 
         updateInfo = localStore.getUpdateInfo();
         if (updateInfo != null) {
@@ -62,6 +66,8 @@ public class SystemUpdateService {
             updateInfo = UpdateFactory.createSystemUpdateInfo(localVersion);
             localStore.saveUpdateInfo(updateInfo);
         }
+
+        Logger.i(TAG, "UpdateInfo init : " + updateInfo.toString());
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -95,7 +101,7 @@ public class SystemUpdateService {
         Logger.i(TAG, "startCheckVersion : " + isChecking);
         if (canCheck()) {
             isChecking = true;
-            interactor.checkNewVersion(updateInfo.getUniqueId(), updateInfo.getLocalVersion(), null)
+            interactor.checkNewVersion(updateInfo.getUniqueId(), updateInfo.getLocalVersion(), SystemUtils.getChannel())
                     .subscribe(new Subscriber<Version>() {
                         @Override
                         public void onCompleted() {
@@ -121,7 +127,7 @@ public class SystemUpdateService {
         Logger.i(TAG, "startDownload : " + isDownloading);
         if (canDownload()) {
             isDownloading = true;
-            final String downloadFileName = DOWNLOAD_FILE_NAME;
+            final String downloadFileName = DOWNLOAD_FILE_PATH;
             final String url = updateInfo.getVersion().getDownloadUrl();
             final long fileSize = updateInfo.getVersion().getSize();
             updateInfo.startDownload(downloadFileName, null);
@@ -177,8 +183,8 @@ public class SystemUpdateService {
 
     private void update(String romFilePath) {
         try {
-            AppUtils.installApk(context, romFilePath);
-            //RecoverySystem.installPackage(context, new File(romFilePath));
+            Logger.e(TAG, "update : " + romFilePath);
+            RecoverySystem.installPackage(context, new File(romFilePath));
         } catch (Exception e) {
             e.printStackTrace();
         }

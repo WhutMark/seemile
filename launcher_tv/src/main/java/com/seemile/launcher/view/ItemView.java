@@ -1,6 +1,7 @@
 package com.seemile.launcher.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -48,6 +49,12 @@ public class ItemView extends RelativeLayout {
     public void setIcon(Drawable icon) {
         if (iconView != null && icon != null) {
             iconView.setImageDrawable(icon);
+        }
+    }
+
+    public void setIcon(Bitmap icon) {
+        if (iconView != null && icon != null) {
+            iconView.setImageBitmap(icon);
         }
     }
 

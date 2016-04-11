@@ -44,7 +44,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_all_apps.png",
           "bgUrl": "",
-          "url": "app://com.rk_itvui.allapp"
+          "url": "app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
         },
         {
           "id": 1004,

@@ -10,4 +10,5 @@ import rx.Observable;
 public interface HomeInteractor extends Interactor {
 
     Observable<List<HomePageInfo>> getHomePageList();
+
 }

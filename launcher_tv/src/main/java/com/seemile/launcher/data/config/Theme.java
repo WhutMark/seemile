@@ -15,6 +15,14 @@ public class Theme {
         return "theme2/_home_pages.json";
     }
 
+    public static String getGamePagePath() {
+        return "theme2/_game_page.json";
+    }
+
+    public static String getVideoPagePath() {
+        return "theme2/_game_page.json";
+    }
+
     public static int getHomeCountX() {
         return 6;
     }

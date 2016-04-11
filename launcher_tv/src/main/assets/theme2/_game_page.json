@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "id": 10001,
+      "itemType": 1,
+      "screen": 0,
+      "container": 10000,
+      "cellX": 0,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.android.settings",
+      "className":"com.android.settings.HWSettings"
+    },
+    {
+      "id": 10002,
+      "itemType": 1,
+      "screen": 0,
+      "container": 10000,
+      "cellX": 1,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.qingqing.teacher",
+      "className":"com.qingqing.teacher.v2.ui.StartActivity"
+    },
+    {
+      "id": 10003,
+      "itemType": 1,
+      "screen": 0,
+      "container": 10000,
+      "cellX": 2,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.android.gallery3d",
+      "className":"com.huawei.gallery.app.GalleryMain"
+    }
+  ]
+}

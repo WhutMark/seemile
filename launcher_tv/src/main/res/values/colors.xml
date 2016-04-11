@@ -13,12 +13,13 @@
     <color name="black_light">#333333</color>
 
     <!-- basic colors -->
-    <color name="blue">#FF496EDA</color>
-    <color name="blue_light">#16AFE9</color>
+    <color name="blue">#029AE3</color>
 
     <color name="orange">#FF9900</color>
     <color name="yellow">#FFCC00</color>
     <color name="red">#FF432F</color>
-    <color name="purple">#B76DFF</color>
-    <color name="green">#54AE37</color>
+    <color name="pink">#E969D0</color>
+    <color name="purple">#A051DA</color>
+    <color name="green">#00C600</color>
+
 </resources>

@@ -101,7 +101,7 @@ public class IconCache {
 			}
 
 		}
-		return null;
+		return entry;
 	}
 
 	public Drawable getFullResDefaultIcon() {

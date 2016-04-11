@@ -2,7 +2,6 @@ package com.seemile.launcher.ui;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -10,6 +9,7 @@ import android.view.View;
 
 import com.seemile.launcher.R;
 import com.seemile.launcher.data.config.Theme;
+import com.seemile.launcher.domain.app.AppsService;
 import com.seemile.launcher.domain.home.HomeInfo;
 import com.seemile.launcher.domain.home.HomePageInfo;
 import com.seemile.launcher.domain.home.HomeService;
@@ -29,8 +29,6 @@ public class LauncherActivity extends PresenterActivity<SystemUpdatePresenter.Vi
 
     private static final String TAG = "Launcher";
 
-    private HomeService mHomeService;
-
     @Bind(R.id.home_cell_layout)
     CellLayout mHomeCellLayout;
 
@@ -44,11 +42,11 @@ public class LauncherActivity extends PresenterActivity<SystemUpdatePresenter.Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        AppsService.getInstance(this);
+
         mInflater = LayoutInflater.from(this);
 
         mHomeCellLayout.setGridSize(Theme.getHomeCountX(), Theme.getHomeCountY());
-
-        mHomeService = HomeService.getInstance(this);
 
         Subscriber<List<HomePageInfo>> subscriber = new Subscriber<List<HomePageInfo>>() {
             @Override
@@ -67,7 +65,7 @@ public class LauncherActivity extends PresenterActivity<SystemUpdatePresenter.Vi
             public void onError(Throwable e) {
             }
         };
-        mHomeService.getHomePageList().subscribe(subscriber);
+        HomeService.getInstance(this).getHomePageList().subscribe(subscriber);
     }
 
     private void addHomePageToCellLayout(HomePageInfo homePageInfo) {

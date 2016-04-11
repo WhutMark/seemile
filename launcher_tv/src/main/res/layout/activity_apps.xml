@@ -8,17 +8,20 @@
     <include layout="@layout/include_top_bar" />
 
     <com.seemile.launcher.view.CellLayout
-        android:id="@+id/home_cell_layout"
+        android:id="@+id/app_cell_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="60dp"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        android:paddingTop="40dp"
-        app:heightGap="12dp"
-        app:widthGap="12dp" />
+        android:paddingBottom="@dimen/spacing_huge"
+        android:paddingLeft="@dimen/spacing_huge"
+        android:paddingRight="@dimen/spacing_huge"
+        android:paddingTop="@dimen/spacing_huge"
+        app:countX="7"
+        app:countY="2"
+        app:heightGap="@dimen/spacing_small"
+        app:widthGap="@dimen/spacing_small" />
 
     <include layout="@layout/include_bottom_bar" />
 
 </LinearLayout>
+

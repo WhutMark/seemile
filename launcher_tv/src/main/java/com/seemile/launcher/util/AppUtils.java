@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 
 import com.seemile.launcher.R;
+import com.seemile.launcher.domain.app.AppInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,6 +83,26 @@ public class AppUtils extends AbsUtils {
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         return getResolveInfoList(intent);
+    }
+
+    public static Drawable getBackground(AppInfo info) {
+        int color;
+        int mod = info != null && info.title != null ? info.title.length() / 4 : 0;
+        switch (mod) {
+            case 1:
+                color = R.color.pink;
+                break;
+            case 2:
+                color = R.color.blue;
+                break;
+            case 3:
+                color = R.color.green;
+                break;
+            default:
+                color = R.color.purple;
+                break;
+        }
+        return new ColorDrawable(sContext.getResources().getColor(color));
     }
 
 

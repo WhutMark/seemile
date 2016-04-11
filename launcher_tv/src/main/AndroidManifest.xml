@@ -35,6 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ui.AppsActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/LauncherTheme" />
     </application>
 
 </manifest>

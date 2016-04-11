@@ -73,7 +73,7 @@ public class HomeInfo extends ItemInfo {
                     List<ResolveInfo> resolveInfoList = AppUtils.getAppLauncherInfo(packageName);
                     if (resolveInfoList != null && resolveInfoList.size() > 0) {
                         ResolveInfo info = resolveInfoList.get(0);
-                        return getActivity(new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name));
+                        return getMainActivity(new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name));
                     }
                 }
             }
@@ -81,11 +81,19 @@ public class HomeInfo extends ItemInfo {
         return new Intent();
     }
 
-    final Intent getActivity(ComponentName className) {
+    final Intent getMainActivity(ComponentName componentName) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.setComponent(className);
+        intent.setComponent(componentName);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        return intent;
+    }
+
+    final Intent getActivity(ComponentName componentName) {
+        Intent intent = new Intent();
+        intent.setComponent(componentName);
+        //启动同一个应用内的Activity不要使用FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }
 

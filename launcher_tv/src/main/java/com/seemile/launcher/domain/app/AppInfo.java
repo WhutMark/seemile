@@ -8,6 +8,8 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.seemile.launcher.domain.ItemInfo;
+
 /**
  * Created by whuthm on 2016/1/7.
  */

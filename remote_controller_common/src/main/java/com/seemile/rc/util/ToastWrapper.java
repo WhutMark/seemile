@@ -1,4 +1,4 @@
-package com.seemile.controller.util;
+package com.seemile.rc.util;
 
 import android.content.Context;
 import android.util.Log;

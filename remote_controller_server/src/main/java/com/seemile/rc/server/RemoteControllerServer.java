@@ -1,8 +1,8 @@
-package com.seemile.client.server;
+package com.seemile.rc.server;
 
 import android.util.Log;
 
-import com.seemile.controller.RemoteController;
+import com.seemile.rc.RemoteController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +31,7 @@ public class RemoteControllerServer extends RemoteController {
             synchronized (RemoteControllerServer.class) {
                 if (sInstance == null) {
                     sInstance = new RemoteControllerServer();
+                    sInstance.connect();
                 }
             }
         }
@@ -85,7 +86,7 @@ public class RemoteControllerServer extends RemoteController {
 
         @Override
         public void run() {
-
+            Log.i(TAG, "Delivery key : " + keyCode);
         }
     }
 

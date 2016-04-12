@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.seemile.controller.client"
+        applicationId "com.seemile.rc.client"
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 1

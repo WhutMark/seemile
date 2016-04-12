@@ -1,14 +1,15 @@
-package com.seemile.controller.client;
+package com.seemile.rc.client;
 
 import android.util.Log;
 
-import com.seemile.controller.RemoteController;
+import com.seemile.rc.RemoteController;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -21,9 +22,11 @@ public class RemoteControllerClient extends RemoteController {
 
     private volatile static RemoteControllerClient sInstance;
 
-    private BlockingQueue<Integer> mKeyCodeQueue = new LinkedBlockingDeque<>();
+    private BlockingQueue<Integer> mKeyCodeQueue = new ArrayBlockingQueue<>(100);
 
-    private boolean mNeedConnect;
+    private boolean mRepeatConnect;
+
+    private Socket mSocket;
 
     private RemoteControllerClient() {
         super("RemoteControllerClient");
@@ -40,33 +43,43 @@ public class RemoteControllerClient extends RemoteController {
         return sInstance;
     }
 
+    public void setRepeatConnect(boolean repeatConnect) {
+        mRepeatConnect = repeatConnect;
+    }
+
     private class ConnectionRunnable implements Runnable {
 
         @Override
         public void run() {
-            Socket socket = null;
             try {
-                socket = new Socket("192.168.5.101", PORT);
+                mSocket = new Socket("127.0.0.1", PORT);
+                mSocket.setKeepAlive(true);//开启保持活动状态的套接字
+                //mSocket.setSoTimeout(5000);//设置超时时间
+                //mSocket.sendUrgentData();
                 mIsConnected = true;
+                Log.i(TAG, "Connected");
                 while (true) {
+                    mSocket.sendUrgentData(15);
                     final int keyCode = mKeyCodeQueue.take();
-                    OutputStream os = socket.getOutputStream();
-                    PrintStream ps = new PrintStream(os);
-                    ps.println(keyCode);
-                    ps.flush();
-                    ps.close();
+                    Log.i(TAG, "post key : " + keyCode);
+                    OutputStream  os = mSocket.getOutputStream();
+                    //ps.close();
                 }
             } catch (UnknownHostException e) {
+                Log.w(TAG, e);
             } catch (IOException e) {
+                Log.w(TAG, e);
             } catch (InterruptedException e) {
+                Log.w(TAG, e);
             } finally {
-                if (socket != null) {
+                if (mSocket != null) {
                     try {
-                        socket.close();
+                        mSocket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                Log.i(TAG, "disconnected");
                 mIsConnected = false;
                 runOnWorkThread(new ConnectionRunnable());
             }
@@ -80,7 +93,7 @@ public class RemoteControllerClient extends RemoteController {
 
     @Override
     public void connect() {
-        if(!isConnected()) {
+        if (!isConnected()) {
             runOnWorkThread(new ConnectionRunnable());
         } else {
             Log.e(TAG, "RemoteControllerServer is connected");
@@ -89,7 +102,7 @@ public class RemoteControllerClient extends RemoteController {
 
     @Override
     public boolean isConnected() {
-        return false;
+        return mIsConnected && mSocket != null && mSocket.isConnected();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.seemile.controller.util;
+package com.seemile.rc.util;
 
 import android.app.Activity;
 import android.content.Context;

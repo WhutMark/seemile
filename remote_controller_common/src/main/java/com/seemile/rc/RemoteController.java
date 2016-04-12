@@ -1,4 +1,4 @@
-package com.seemile.controller;
+package com.seemile.rc;
 
 import android.os.Handler;
 import android.os.HandlerThread;

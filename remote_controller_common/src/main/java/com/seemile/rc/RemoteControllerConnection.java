@@ -1,4 +1,4 @@
-package com.seemile.controller;
+package com.seemile.rc;
 
 /**
  * Created by whuthm on 2016/4/11.

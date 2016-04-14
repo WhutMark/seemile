@@ -1,49 +1,81 @@
 package com.seemile.rc;
 
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by whuthm on 2016/4/11.
  */
-public abstract class RemoteController {
+public abstract class RemoteController<T> {
 
     public static final int PORT = 7000;
 
-    private Handler mWorkHandler;
     private Handler mMainHandler;
 
-    protected boolean mIsConnected;
+    protected boolean mConnected;
 
-    protected RemoteController(String name) {
+    protected Object mConnLock = new Object();
+
+    protected WeakReference<RemoteControllerConnection> mRCConnectionRef;
+
+    protected RemoteController() {
         mMainHandler = new Handler(Looper.getMainLooper());
-        HandlerThread handlerThread = new HandlerThread(name);
-        handlerThread.start();
-        mWorkHandler = new Handler(handlerThread.getLooper());
     }
 
     public abstract void connect();
 
     public boolean isConnected() {
-        return mIsConnected;
+        synchronized (mConnLock) {
+            return mConnected;
+        }
+    }
+
+    protected void setConnected(boolean isConnected) {
+        boolean notify;
+        synchronized (mConnLock) {
+            notify = mConnected != isConnected;
+            mConnected = isConnected;
+        }
+        if (notify) {
+            notifyConnectionChanged(isConnected);
+        }
     }
 
     public abstract void disconnect();
 
     //生产事件：用于客户端
-    protected void post(int keyCode) {
+    protected void post(T t) {
     }
 
     //分发事件:用于服务端
-    protected void delivery(int keyCode) {
+    protected void delivery(T t) {
     }
 
     protected final void runOnMainThread(Runnable r) {
         mMainHandler.post(r);
     }
 
-    protected final void runOnWorkThread(Runnable r) {
-        mWorkHandler.post(r);
+    public void setRemoteControllerConnection(RemoteControllerConnection connection) {
+        mRCConnectionRef = new WeakReference<RemoteControllerConnection>(connection);
     }
+
+    protected void notifyConnectionChanged(final boolean isConnected) {
+        final RemoteControllerConnection connection = mRCConnectionRef != null ? mRCConnectionRef.get() : null;
+        if (connection == null) {
+            return;
+        }
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isConnected) {
+                    connection.onConnected();
+                } else {
+                    connection.onDisconnected();
+                }
+            }
+        });
+    }
+
 }

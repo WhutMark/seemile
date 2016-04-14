@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,47 +11,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <com.seemile.rc.client.KeyView
             android:id="@+id/btn_enter_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Enter" />
+            android:text="Enter"
+            app:keyCode="enter" />
 
 
-        <Button
+        <com.seemile.rc.client.KeyView
             android:id="@+id/btn_up_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_enter_key"
             android:layout_centerHorizontal="true"
-            android:text="Up" />
+            android:text="Up"
+            app:keyCode="up" />
 
 
-        <Button
+        <com.seemile.rc.client.KeyView
             android:id="@+id/btn_down_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btn_enter_key"
             android:layout_centerHorizontal="true"
-            android:text="Down" />
+            android:text="Down"
+            app:keyCode="down" />
 
 
-        <Button
+        <com.seemile.rc.client.KeyView
             android:id="@+id/btn_left_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/btn_enter_key"
-            android:text="Left" />
+            android:text="Left"
+            app:keyCode="left" />
 
-        <Button
+        <com.seemile.rc.client.KeyView
             android:id="@+id/btn_right_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/btn_enter_key"
-            android:text="Right" />
+            android:text="Right"
+            app:keyCode="right" />
 
     </RelativeLayout>
 

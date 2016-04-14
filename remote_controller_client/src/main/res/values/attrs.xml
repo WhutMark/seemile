@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="KeyView">
+        <attr name="keyCode">
+            <!--KeyEvent-->
+            <!--KEYCODE_HOME = 3-->
+            <flag name="home" value="3" />
+            <!--KEYCODE_BACK = 4-->
+            <flag name="back" value="4" />
+            <!--KEYCODE_DPAD_UP = 19-->
+            <flag name="up" value="19" />
+            <!--KEYCODE_DPAD_DOWN = 20-->
+            <flag name="down" value="20" />
+            <!--KEYCODE_DPAD_LEFT = 21-->
+            <flag name="left" value="21" />
+            <!--KEYCODE_DPAD_RIGHT = 22-->
+            <flag name="right" value="22" />
+            <!--KEYCODE_DPAD_CENTER = 23-->
+            <flag name="center" value="23" />
+            <!--KEYCODE_VOLUME_UP = 24-->
+            <flag name="volumeUp" value="24" />
+            <!--KEYCODE_VOLUME_DOWN = 25-->
+            <flag name="volumeDown" value="25" />
+            <!--KEYCODE_POWER = 26-->
+            <flag name="power" value="26" />
+            <!--KEYCODE_ENTER = 66-->
+            <flag name="enter" value="66" />
+        </attr>
+    </declare-styleable>
+</resources>

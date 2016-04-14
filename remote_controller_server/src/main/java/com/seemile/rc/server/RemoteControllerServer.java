@@ -1,8 +1,10 @@
 package com.seemile.rc.server;
 
 import android.util.Log;
+import android.view.KeyEvent;
 
 import com.seemile.rc.RemoteController;
+import com.seemile.rc.util.ToastWrapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,16 +16,14 @@ import java.net.Socket;
 /**
  * Created by whuthm on 2016/4/11.
  */
-public class RemoteControllerServer extends RemoteController {
+public class RemoteControllerServer extends RemoteController<KeyEvent> {
 
     private static final String TAG = "RemoteControllerServer";
 
     private volatile static RemoteControllerServer sInstance;
 
-    private ServerSocket mServerSocket;
-
     private RemoteControllerServer() {
-        super("RemoteControllerServer");
+        new ConnectionThread().start();
     }
 
     public static RemoteControllerServer getInstance() {
@@ -38,70 +38,99 @@ public class RemoteControllerServer extends RemoteController {
         return sInstance;
     }
 
-    class ConnectionRunnable implements Runnable {
+    class ConnectionThread extends Thread {
+
+        private int mRestartCount;
 
         @Override
         public void run() {
-            try {
-                mServerSocket = new ServerSocket(PORT);
-                mIsConnected = true;
-                Log.i(TAG, "RemoteControllerServer : connected!");
-                while (true) {
-                    Socket client = mServerSocket.accept();
-                    InputStream ins = client.getInputStream();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-                    final String tmp = br.readLine();
-                    try {
-                        delivery(Integer.parseInt(tmp));
-                    } catch (NumberFormatException e) {
-                    }
-                }
-            } catch (IOException e) {
-                Log.e(TAG, "RemoteControllerServer : disconnected!");
-            } finally {
-                if (mServerSocket != null) {
-                    try {
-                        mServerSocket.close();
-                    } catch (IOException e) {
-                    }
-                }
+            while (true) {
+                ServerSocket serverSocket = null;
                 try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    serverSocket = new ServerSocket(PORT);
+                    Log.i(TAG, "RemoteControllerServer : start");
+                    while (true) {
+                        Socket client = serverSocket.accept();
+                        Log.i(TAG, "RemoteControllerServer : accept");
+                        new WorkThread(client).start();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "RemoteControllerServer : disconnected!");
+                } finally {
+                    if (serverSocket != null) {
+                        try {
+                            serverSocket.close();
+                        } catch (IOException e) {
+                        }
+                    }
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Log.e(TAG, "RemoteControllerServer : restart! count = " + mRestartCount);
+                    mRestartCount++;
                 }
-                mIsConnected = false;
-                runOnWorkThread(new ConnectionRunnable());
             }
         }
     }
 
-    class DeliveryRunnable implements Runnable {
+    private class WorkThread extends Thread {
 
-        private final int keyCode;
+        private Socket socket;
 
-        DeliveryRunnable(int keyCode) {
-            this.keyCode = keyCode;
+        WorkThread(Socket socket) {
+            this.socket = socket;
         }
 
         @Override
         public void run() {
-            Log.i(TAG, "Delivery key : " + keyCode);
+            try {
+                InputStream is = socket.getInputStream();
+                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                String tmp;
+                while ((tmp = br.readLine()) != null) {
+                    Log.i(TAG, "Read : " + tmp);
+                    String[] parameters = tmp.split(",");
+                    if (parameters != null && parameters.length >= 2) {
+                        try {
+                            delivery(new KeyEvent(Integer.parseInt(parameters[0]), Integer.parseInt(parameters[1])));
+                        } catch (NumberFormatException e) {
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "WorkThread", e);
+                e.printStackTrace();
+            } finally {
+                Log.w(TAG, "WorkThread stop");
+            }
+
+        }
+    }
+
+    private class DeliveryRunnable implements Runnable {
+
+        private final KeyEvent keyEvent;
+
+        DeliveryRunnable(KeyEvent keyEvent) {
+            this.keyEvent = keyEvent;
+        }
+
+        @Override
+        public void run() {
+            ToastWrapper.show("Delivery KeyAction : " + keyEvent.getAction() + ", KeyCode : " + keyEvent.getKeyCode());
         }
     }
 
     @Override
-    protected void delivery(int keyCode) {
-        runOnMainThread(new DeliveryRunnable(keyCode));
+    protected void delivery(KeyEvent keyEvent) {
+        runOnMainThread(new DeliveryRunnable(keyEvent));
     }
 
     @Override
     public void connect() {
-        if (!isConnected()) {
-            runOnWorkThread(new ConnectionRunnable());
-        } else {
-            Log.e(TAG, "RemoteControllerServer is connected");
-        }
+        //Nothing
     }
 
     @Override

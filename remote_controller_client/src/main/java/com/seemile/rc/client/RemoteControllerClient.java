@@ -9,9 +9,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -30,8 +33,13 @@ public class RemoteControllerClient extends RemoteController<KeyEvent> {
 
     private boolean mTryStopConn = true;
 
+    protected boolean mScanning;
+
+    protected Object mScanLock = new Object();
+
+    protected UDPSender mUdpSender;
+
     private RemoteControllerClient() {
-        //Empty
         new ConnectionThread().start();
     }
 
@@ -194,6 +202,47 @@ public class RemoteControllerClient extends RemoteController<KeyEvent> {
         }
     }
 
+    private class UDPSender extends Thread {
+
+        @Override
+        public void run() {
+            DatagramSocket datagramSocket = null;
+            try {
+                InetAddress hostAddress = InetAddress.getByName("172.22.19.0");
+                final String broadcastSignal = SIGNAL_BROADCAST;
+                byte[] broadcastBytes = broadcastSignal.getBytes();
+                DatagramPacket sendPacket = new DatagramPacket(broadcastBytes, broadcastBytes.length, hostAddress, UDP_SERVER_PORT);
+                datagramSocket = new DatagramSocket(UDP_CLIENT_PORT);
+                Log.i(TAG, "UDPSender : start");
+                // Broadcast address
+                datagramSocket.send(sendPacket);
+                Log.i(TAG, "UDPSender : send");
+
+                byte[] buf = new byte[1024];
+                DatagramPacket receivePacket = new DatagramPacket(buf, buf.length);
+                datagramSocket.receive(receivePacket);
+
+                Log.i(TAG, "UDPSender : receive" + new String(receivePacket.getData(), 0, receivePacket.getLength()) + "  " +
+                        receivePacket.getAddress().getHostAddress());
+
+            } catch (SocketException e) {
+                Log.w(TAG, "UDPSender", e);
+            } catch (IOException e) {
+                Log.w(TAG, "UDPSender", e);
+            } finally {
+                if (datagramSocket != null) {
+                    datagramSocket.close();
+                }
+
+                synchronized (mScanLock) {
+                    mScanLock = false;
+                    notifyStopScan();
+                }
+
+            }
+        }
+    }
+
 
     @Override
     protected void post(KeyEvent t) {
@@ -217,5 +266,42 @@ public class RemoteControllerClient extends RemoteController<KeyEvent> {
         synchronized (mConnLock) {
             mTryStopConn = true;
         }
+    }
+
+    public void startScan() {
+        synchronized (mScanLock) {
+            if (!mScanning) {
+                mScanning = true;
+                mUdpSender = new UDPSender();
+                mUdpSender.start();
+                notifyStartScan();
+            } else {
+                Log.e(TAG, "scanning");
+            }
+        }
+    }
+
+    public void stopScan() {
+        synchronized (mScanLock) {
+            if (mUdpSender != null) {
+                mUdpSender.interrupt();
+            }
+            if (mScanning) {
+                mScanning = false;
+                notifyStopScan();
+            }
+        }
+    }
+
+    public boolean isScanning() {
+        synchronized (mScanLock) {
+            return mScanning;
+        }
+    }
+
+    private void notifyStartScan() {
+    }
+
+    private void notifyStopScan() {
     }
 }

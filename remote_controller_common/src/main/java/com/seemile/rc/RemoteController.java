@@ -10,7 +10,15 @@ import java.lang.ref.WeakReference;
  */
 public abstract class RemoteController<T> {
 
-    public static final int PORT = 7000;
+    protected static final int PORT = 7000;
+
+    protected static final int UDP_SERVER_PORT = 7001;
+
+    protected static final int UDP_CLIENT_PORT = 7002;
+
+    protected static String SIGNAL_BROADCAST = "Broadcast";
+
+    protected static String SIGNAL_ACK = "ACK";
 
     private Handler mMainHandler;
 

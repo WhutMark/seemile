@@ -10,8 +10,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by whuthm on 2016/4/11.
@@ -24,6 +27,7 @@ public class RemoteControllerServer extends RemoteController<KeyEvent> {
 
     private RemoteControllerServer() {
         new ConnectionThread().start();
+        new UDPReceiver().start();
     }
 
     public static RemoteControllerServer getInstance() {
@@ -120,6 +124,52 @@ public class RemoteControllerServer extends RemoteController<KeyEvent> {
         @Override
         public void run() {
             ToastWrapper.show("Delivery KeyAction : " + keyEvent.getAction() + ", KeyCode : " + keyEvent.getKeyCode());
+        }
+    }
+
+    private class UDPReceiver extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                DatagramSocket datagramSocket = null;
+                try {
+                    byte[] buf = new byte[1024];
+                    DatagramPacket receivePacket = new DatagramPacket(buf, buf.length);
+                    datagramSocket = new DatagramSocket(UDP_SERVER_PORT);
+                    Log.i(TAG, "UDPReceiver : start");
+                    while (true) {
+                        datagramSocket.receive(receivePacket);
+
+                        String broadcastSignal = new String(receivePacket.getData(), 0, receivePacket.getLength());
+
+                        Log.i(TAG, "UDPReceiver : " +
+                                broadcastSignal + "  " +
+                                receivePacket.getAddress().getHostAddress() + "  " +
+                                receivePacket.getAddress().getHostName());
+                        if(SIGNAL_BROADCAST.equals(broadcastSignal)) {
+                            final String feedback = SIGNAL_ACK;
+                            byte[] feedbackBytes = feedback.getBytes();
+                            DatagramPacket feedbackPacket = new DatagramPacket(feedbackBytes, 0,
+                                    feedbackBytes.length, receivePacket.getSocketAddress());
+                            datagramSocket.send(feedbackPacket);
+                            Log.i(TAG, "UDPReceiver : feedback");
+                        }
+                    }
+                } catch (SocketException e) {
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (datagramSocket != null) {
+                        datagramSocket.close();
+                    }
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
 

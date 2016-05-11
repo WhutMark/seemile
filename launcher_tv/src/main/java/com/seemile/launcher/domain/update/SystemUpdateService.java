@@ -29,9 +29,9 @@ public class SystemUpdateService {
 
     private static final String TAG = "SystemUpdateService";
 
-    public static String DOWNLOAD_FILE_PATH;
-
     public static final String ROM_FILE_NAME = "rom.zip";
+
+    public static String DOWNLOAD_FILE_PATH ;//= "cache/" + ROM_FILE_NAME;
 
     private Context context;
 

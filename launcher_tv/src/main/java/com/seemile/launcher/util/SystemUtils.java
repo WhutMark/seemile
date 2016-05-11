@@ -17,7 +17,7 @@ public class SystemUtils {
     private static final String CHANNEL = "tv";
 
     public static String getVersion() {
-        return getPropertyValue("ro.vendor.sw.version", "1.0");
+        return getPropertyValue("ro.vendor.sw.version", UNKNOWN);
     }
 
     public static String getChannel() {

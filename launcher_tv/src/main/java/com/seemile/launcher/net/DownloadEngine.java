@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
  */
 public class DownloadEngine extends OkHttpEngine<Download> {
 
-    private static final String TAG = "GenericEngine";
+    private static final String TAG = "DownloadEngine";
 
     private static final int SC_PARTIAL_CONTENT = 206;
 
@@ -35,9 +35,9 @@ public class DownloadEngine extends OkHttpEngine<Download> {
     static {
         sHttpClient = new OkHttpClient();
 
-        sHttpClient.setConnectTimeout(10, TimeUnit.SECONDS);
-        sHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
-        sHttpClient.setWriteTimeout(10, TimeUnit.SECONDS);
+        sHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
+        sHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+        sHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
     }
 
     private final String filePath;
@@ -74,6 +74,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
         Observable<Download> observable = Observable.create(new Observable.OnSubscribe<Download>() {
             @Override
             public void call(Subscriber<? super Download> subscriber) {
+                Logger.i(TAG, "start download");
                 subscriber.onNext(Download.PENDING());
                 InputStream is = null;
                 FileOutputStream fos = null;
@@ -85,15 +86,21 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                     final int rspCode = response.code();
                     boolean append = false;
                     if (response.isSuccessful()) {
+                        Logger.i(TAG, "downloading : responseSuccessful");
                         ResponseBody responseBody = response.body();
                         //根据具体的后台来判断，有的后台只返回剩余的大小
                         final long realFileSize = responseBody.contentLength();
+                        Logger.i(TAG, "开始判断是否断点续传：rspCode = " + rspCode +
+                                ", fileSize = " + fileSize +
+                                ", realFileSize = " + realFileSize +
+                                ", completedFileSize = " + completedFileSize);
                         if (realFileSize == fileSize && rspCode == SC_PARTIAL_CONTENT) {
                             append = true;
                         } else {
                             completedFileSize = 0;
                             file.createNewFile();
                         }
+                        Logger.i(TAG, "断点续传 : " + append);
                         is = responseBody.byteStream();
                         fos = new FileOutputStream(file, append);
                         byte[] buffer = new byte[4 * 1024];
@@ -104,7 +111,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                             fos.write(buffer, 0, length);
                             completedFileSize += length;
                             int curProgress = calculateProgress(completedFileSize, realFileSize);
-                            Logger.e(TAG, "curProgress = " + curProgress + "  " + completedFileSize + "  " + realFileSize);
+                            Logger.i(TAG, "curProgress = " + curProgress + "  " + completedFileSize + "  " + realFileSize);
                             if (curProgress != progress) {
                                 progress = curProgress;
                                 subscriber.onNext(Download.RUNNING(progress));
@@ -113,6 +120,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         subscriber.onNext(Download.SUCCESSFUL());
                         subscriber.onCompleted();
                     } else {
+                        Logger.e(TAG, "downloading : responseFailed");
                         subscriber.onNext(Download.FAILED());
                         subscriber.onError(new NetworkError(rspCode, response.toString()));
                     }

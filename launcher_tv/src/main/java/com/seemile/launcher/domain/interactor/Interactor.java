@@ -7,6 +7,6 @@ public interface Interactor {
 
     public static final String ENDPOINT = "http://120.27.157.5";
 
-    public static final String CHANNEL = "tv";
+    public static final String CHANNEL = "edu";
 
 }

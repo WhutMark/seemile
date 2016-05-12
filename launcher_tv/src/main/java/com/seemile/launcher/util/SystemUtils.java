@@ -14,7 +14,7 @@ public class SystemUtils {
 
     private static final String UNKNOWN = "unknown";
 
-    private static final String CHANNEL = "tv";
+    private static final String CHANNEL = "edu";
 
     public static String getVersion() {
         return getPropertyValue("ro.vendor.sw.version", UNKNOWN);

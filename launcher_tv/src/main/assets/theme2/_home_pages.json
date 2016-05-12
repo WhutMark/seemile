@@ -30,7 +30,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_game.png",
           "bgUrl": "",
-          "url": "app://"
+          "url": "app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
         },
         {
           "id": 1003,
@@ -44,7 +44,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_all_apps.png",
           "bgUrl": "",
-          "url": "app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
+          "url": "app://com.android.settings/com.android.settings.Settings$ManageApplicationsActivity"
         },
         {
           "id": 1004,

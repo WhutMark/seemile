@@ -92,4 +92,9 @@ public class Version {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Version(serviceVersion=" + serviceVersion + ", downloadUrl=" + downloadUrl + " , description=" + description + ")";
+    }
 }

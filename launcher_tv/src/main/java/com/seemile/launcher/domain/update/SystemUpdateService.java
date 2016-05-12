@@ -7,9 +7,11 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.RecoverySystem;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.seemile.launcher.domain.Download;
 import com.seemile.launcher.domain.interactor.SystemUpdateInteractor;
+import com.seemile.launcher.exception.NetworkError;
 import com.seemile.launcher.util.AppUtils;
 import com.seemile.launcher.util.ExecutorUtils;
 import com.seemile.launcher.util.Logger;
@@ -31,7 +33,7 @@ public class SystemUpdateService {
 
     public static final String ROM_FILE_NAME = "rom.zip";
 
-    public static String DOWNLOAD_FILE_PATH ;//= "cache/" + ROM_FILE_NAME;
+    public static String DOWNLOAD_FILE_PATH = "cache/" + ROM_FILE_NAME;
 
     private Context context;
 
@@ -52,7 +54,7 @@ public class SystemUpdateService {
     private SystemUpdateService(Context context) {
         this.context = context.getApplicationContext();
 
-        DOWNLOAD_FILE_PATH = context.getCacheDir() + "/" + ROM_FILE_NAME;
+        //DOWNLOAD_FILE_PATH = context.getCacheDir() + "/" + ROM_FILE_NAME;
         interactor = new SystemUpdateImpl();
         localStore = new SystemUpdateLocalStore(this.context);
         localVersion = SystemUtils.getVersion();
@@ -106,16 +108,24 @@ public class SystemUpdateService {
                         @Override
                         public void onCompleted() {
                             isChecking = false;
+                            Logger.i(TAG, "Check Completed");
                             startDownload();
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             isChecking = false;
+                            if (e instanceof NetworkError) {
+                                NetworkError error = (NetworkError) e;
+                                Logger.e(TAG, "Check Error : Code = " + error.getRspCode() + ", Message = " + error.getMessage());
+                            } else {
+                                Logger.e(TAG, "Check Error", e);
+                            }
                         }
 
                         @Override
                         public void onNext(Version version) {
+                            Logger.i(TAG, "Check Success Version = " + version.toString());
                             updateInfo.setVersion(version);
                             localStore.saveUpdateInfo(updateInfo);
                         }
@@ -130,6 +140,7 @@ public class SystemUpdateService {
             final String downloadFileName = DOWNLOAD_FILE_PATH;
             final String url = updateInfo.getVersion().getDownloadUrl();
             final long fileSize = updateInfo.getVersion().getSize();
+            Logger.i(TAG, "startDownload : " + updateInfo.getVersion().toString());
             updateInfo.startDownload(downloadFileName, null);
             localStore.saveUpdateInfo(updateInfo);
             interactor.download(url, downloadFileName, fileSize).subscribe(new Subscriber<Download>() {

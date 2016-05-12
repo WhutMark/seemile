@@ -87,7 +87,7 @@ public class AppUtils extends AbsUtils {
 
     public static Drawable getBackground(AppInfo info) {
         int color;
-        int mod = info != null && info.title != null ? info.title.length() / 4 : 0;
+        int mod = info != null && info.componentName != null && info.componentName.getPackageName() != null ? info.componentName.getPackageName().length() / 4 : 0;
         switch (mod) {
             case 1:
                 color = R.color.pink;

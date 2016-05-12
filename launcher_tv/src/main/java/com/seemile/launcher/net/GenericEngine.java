@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by whuthm on 2016/3/9.
  */
-public class GenericEngine<T> extends OkHttpEngine {
+public class GenericEngine<T> extends OkHttpEngine<T> {
 
     public static final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
 

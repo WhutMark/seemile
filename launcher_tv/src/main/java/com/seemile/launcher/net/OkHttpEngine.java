@@ -67,7 +67,8 @@ public abstract class OkHttpEngine<T> extends AbstractEngine<T, JSONObject> {
         Observable<T> observable = Observable.create(new Observable.OnSubscribe<T>() {
             @Override
             public void call(final Subscriber<? super T> subscriber) {
-                okCall = getOkHttpClient().newCall(convertFromRequestProtocol());
+                final Request okRequest = convertFromRequestProtocol();
+                okCall = getOkHttpClient().newCall(okRequest);
                 okCall.enqueue(new Callback() {
                     @Override
                     public void onFailure(Request request, IOException e) {
@@ -77,14 +78,21 @@ public abstract class OkHttpEngine<T> extends AbstractEngine<T, JSONObject> {
 
                     @Override
                     public void onResponse(Response response) throws IOException {
-                        final String url = protocol.url();
+                        final String url = okRequest.urlString();
                         int rspCode = response.code();
                         String rspBody = new String(response.body().bytes());
                         if (response.isSuccessful()) {
                             try {
                                 JSONObject json = new JSONObject(rspBody);
-                                subscriber.onNext(parseRspContent(json));
-                                subscriber.onCompleted();
+                                String rspSelfMsg = json.optString("msg");
+                                int rspSelfCode = Integer.parseInt(json.optString("ret"));
+                                Logger.i(TAG, "parse response : rspSelfCode = " + rspSelfCode + ", rspSelfMsg = " + rspSelfMsg);
+                                if (rspSelfCode == 1) {
+                                    subscriber.onNext(parseRspContent(json));
+                                    subscriber.onCompleted();
+                                } else {
+                                    subscriber.onError(new NetworkError(rspSelfCode, rspSelfMsg));
+                                }
                                 Logger.i(TAG, url + "(response success) : " + rspBody);
                             } catch (Exception e) {
                                 e.printStackTrace();

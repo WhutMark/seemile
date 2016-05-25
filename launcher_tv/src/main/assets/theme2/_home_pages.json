@@ -44,7 +44,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_all_apps.png",
           "bgUrl": "",
-          "url": "app://com.android.settings/com.android.settings.Settings$ManageApplicationsActivity"
+          "url": "app://com.rk_itvui.allapp"
         },
         {
           "id": 1004,

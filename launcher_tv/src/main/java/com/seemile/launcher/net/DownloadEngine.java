@@ -64,7 +64,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
         }
 
         okBuilder.url(protocol.url())
-                //.addHeader("Range", "bytes=" + new File(filePath).length() + "-")
+                .addHeader("Range", "bytes=" + new File(filePath).length() + "-")
                 .method(getOkMethod(), getOkRequestBody());
         return okBuilder.build();
     }
@@ -106,13 +106,14 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         byte[] buffer = new byte[4 * 1024];
                         int length;
                         int progress = calculateProgress(completedFileSize, realFileSize);
+                        Logger.i(TAG, "curProgress progress = " + progress + "  " + completedFileSize + "  " + realFileSize);
                         subscriber.onNext(Download.RUNNING(progress));
                         while ((length = is.read(buffer)) > 0) {
                             fos.write(buffer, 0, length);
                             completedFileSize += length;
                             int curProgress = calculateProgress(completedFileSize, realFileSize);
-                            Logger.i(TAG, "curProgress = " + curProgress + "  " + completedFileSize + "  " + realFileSize);
                             if (curProgress != progress) {
+                                Logger.i(TAG, "curProgress = " + curProgress + "  " + completedFileSize + "  " + realFileSize);
                                 progress = curProgress;
                                 subscriber.onNext(Download.RUNNING(progress));
                             }

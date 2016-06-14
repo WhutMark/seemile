@@ -85,7 +85,7 @@ public class SystemUpdateService {
 
         Timer timer = new Timer();
 
-        timer.schedule(timerTask, 0, 24 * 60 * 60 * 1000);
+        timer.schedule(timerTask, 3 * 60 * 1000, 24 * 60 * 60 * 1000);
     }
 
     public static SystemUpdateService getInstance(Context context) {

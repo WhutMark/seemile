@@ -10,6 +10,7 @@ import java.io.FilenameFilter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,6 +80,28 @@ public class StorageUtils {
 
     public static List<String> getAllMountedPathsWithoutSDCard(Context context) {
         List<String> mountedPaths = getAllMountedPaths(context);
+
+        File sdCard = Environment.getExternalStorageDirectory();
+        if (sdCard != null) {
+            mountedPaths.remove(sdCard.getPath());
+        }
+
+        mountedPaths.remove("internal_sd");
+
+        List<String> backupMountedPaths = new ArrayList<>(mountedPaths.size());
+        backupMountedPaths.addAll(mountedPaths);
+
+        for (String filePath : backupMountedPaths) {
+            if (isAllDirectory(filePath)) {
+                String[] allFilenames = new File(filePath).list();
+                if(allFilenames != null && allFilenames.length > 0) {
+                    for(String filename : allFilenames) {
+                        mountedPaths.add(filePath + File.separator + filename);
+                    }
+                }
+            }
+        }
+
         int size = mountedPaths.size();
         int i = 0;
         while (i < size) {
@@ -86,7 +109,7 @@ public class StorageUtils {
             String[] filenames = new File(path).list(new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String filename) {
-                    return filename.startsWith("udisk") && new File(dir, filename).isDirectory();
+                    return new File(dir, filename).isDirectory();
                 }
             });
             if (filenames != null) {
@@ -98,6 +121,18 @@ public class StorageUtils {
             i++;
         }
         return mountedPaths;
+    }
+
+    static boolean isAllDirectory(String filePath) {
+        File file = new File(filePath);
+        String[] filenames = new File(filePath).list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String filename) {
+                return new File(dir, filename).isDirectory();
+            }
+        });
+        String[] allFilenames = file.list();
+        return filenames != null && allFilenames != null && filenames.length == allFilenames.length && allFilenames.length > 0;
     }
 
 }

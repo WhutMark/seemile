@@ -79,10 +79,18 @@ public class DownloadEngine extends OkHttpEngine<Download> {
         }
         Log.i(TAG, "convertFromRequestProtocol : " + new File(filePath).length());
 
+        if (localMatchRemoteForMd5()) {
+            okBuilder.addHeader("Range", "bytes=" + new File(filePath).length() + "-");
+        }
         okBuilder.url(protocol.url())
-                .addHeader("Range", "bytes=" + new File(filePath).length() + "-")
                 .method(getOkMethod(), getOkRequestBody());
         return okBuilder.build();
+    }
+
+    private boolean localMatchRemoteForMd5() {
+        final File md5File = new File(getMd5FilePath());
+        final String localMd5 = FileUtils.readFileAsString(md5File);
+        return needVerifyMd5() && md5.equals(localMd5);
     }
 
     @Override
@@ -118,7 +126,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         final boolean needVerifyMd5 = needVerifyMd5();
                         Log.i(TAG, "needVerifyMd5 = " + needVerifyMd5);
 
-                        if (needVerifyMd5 && remoteMd5.equals(localMd5) && realFileSize == fileSize && rspCode == SC_PARTIAL_CONTENT) {
+                        if (localMatchRemoteForMd5() && rspCode == SC_PARTIAL_CONTENT) {
                             append = true;
                         } else {
                             if (needVerifyMd5) {
@@ -133,9 +141,9 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         byte[] buffer = new byte[4 * 1024];
                         int length;
                         int progress = calculateProgress(completedFileSize, realFileSize);
-                        Logger.i(TAG, "curProgress progress = " + progress + "  " + completedFileSize + "  " + realFileSize);
+                        Logger.i(TAG, "start curProgress progress = " + progress + "  " + completedFileSize + "  " + realFileSize);
                         subscriber.onNext(Download.RUNNING(progress));
-                        while ((length = is.read(buffer)) > 0) {
+                        while (completedFileSize < realFileSize && (length = is.read(buffer)) > 0) {
                             fos.write(buffer, 0, length);
                             completedFileSize += length;
                             int curProgress = calculateProgress(completedFileSize, realFileSize);
@@ -190,6 +198,10 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }
+
+                    if (okCall != null) {
+                        okCall.cancel();
                     }
                 }
             }

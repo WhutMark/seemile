@@ -64,7 +64,7 @@ public class FileUtils {
 	}
 
 	public static String readFileAsString(File file) {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("");
 		FileInputStream fis = null;
 		InputStreamReader isr = null;
 		BufferedReader br = null;

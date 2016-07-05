@@ -1,7 +1,12 @@
 package com.seemile.launcher.net;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.seemile.launcher.domain.Download;
 import com.seemile.launcher.exception.NetworkError;
+import com.seemile.launcher.util.DigestUtils;
+import com.seemile.launcher.util.FileUtils;
 import com.seemile.launcher.util.Logger;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -30,6 +35,8 @@ public class DownloadEngine extends OkHttpEngine<Download> {
 
     private static final int SC_PARTIAL_CONTENT = 206;
 
+    private static final String MD5_SUFFIX = ".md5";
+
     private static OkHttpClient sHttpClient;
 
     static {
@@ -41,14 +48,22 @@ public class DownloadEngine extends OkHttpEngine<Download> {
     }
 
     private final String filePath;
-    private final String url;
+    private final String md5;
     private final long fileSize;
 
-    public DownloadEngine(String url, String filePath, long fileSize) {
+    public DownloadEngine(String url, String filePath, long fileSize, String md5) {
         super(new RequestProtocol.Builder(url).build());
         this.filePath = filePath;
-        this.url = url;
         this.fileSize = fileSize;
+        this.md5 = md5;
+    }
+
+    private boolean needVerifyMd5() {
+        return !TextUtils.isEmpty(md5);
+    }
+
+    private String getMd5FilePath() {
+        return filePath + MD5_SUFFIX;
     }
 
     @Override
@@ -62,6 +77,7 @@ public class DownloadEngine extends OkHttpEngine<Download> {
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             okBuilder.addHeader(entry.getKey(), entry.getValue());
         }
+        Log.i(TAG, "convertFromRequestProtocol : " + new File(filePath).length());
 
         okBuilder.url(protocol.url())
                 .addHeader("Range", "bytes=" + new File(filePath).length() + "-")
@@ -90,13 +106,24 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                         ResponseBody responseBody = response.body();
                         //根据具体的后台来判断，有的后台只返回剩余的大小
                         final long realFileSize = responseBody.contentLength();
+                        Logger.i(TAG, "FilePath = " + filePath);
                         Logger.i(TAG, "开始判断是否断点续传：rspCode = " + rspCode +
                                 ", fileSize = " + fileSize +
                                 ", realFileSize = " + realFileSize +
                                 ", completedFileSize = " + completedFileSize);
-                        if (realFileSize == fileSize && rspCode == SC_PARTIAL_CONTENT) {
+                        final File md5File = new File(getMd5FilePath());
+                        final String localMd5 = FileUtils.readFileAsString(md5File);
+                        final String remoteMd5 = md5;
+
+                        final boolean needVerifyMd5 = needVerifyMd5();
+                        Log.i(TAG, "needVerifyMd5 = " + needVerifyMd5);
+
+                        if (needVerifyMd5 && remoteMd5.equals(localMd5) && realFileSize == fileSize && rspCode == SC_PARTIAL_CONTENT) {
                             append = true;
                         } else {
+                            if (needVerifyMd5) {
+                                FileUtils.writeFile(md5File, remoteMd5);
+                            }
                             completedFileSize = 0;
                             file.createNewFile();
                         }
@@ -118,8 +145,22 @@ public class DownloadEngine extends OkHttpEngine<Download> {
                                 subscriber.onNext(Download.RUNNING(progress));
                             }
                         }
-                        subscriber.onNext(Download.SUCCESSFUL());
-                        subscriber.onCompleted();
+                        if (needVerifyMd5) {
+                            md5File.delete();
+                            final String fileMd5 = DigestUtils.getMD5(file);
+                            if (remoteMd5.equals(fileMd5)) {
+                                subscriber.onNext(Download.SUCCESSFUL());
+                                subscriber.onCompleted();
+                            } else {
+                                file.delete();
+                                Logger.e(TAG, "md5 verify failed : fileMd5 = " + fileMd5 + ", remoteMd5 = " + remoteMd5 + ", localMd5 = " + localMd5);
+                                subscriber.onNext(Download.FAILED());
+                                subscriber.onError(new NetworkError(rspCode, response.toString()));
+                            }
+                        } else {
+                            subscriber.onNext(Download.SUCCESSFUL());
+                            subscriber.onCompleted();
+                        }
                     } else {
                         Logger.e(TAG, "downloading : responseFailed");
                         subscriber.onNext(Download.FAILED());

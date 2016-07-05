@@ -16,7 +16,8 @@ public class VersionConverter implements JsonConverter<Version> {
         String description = dataJson.optString("description");
         String serviceVersion = dataJson.optString("romVersion");
         String downloadUrl = dataJson.optString("downUrl");
+        String md5 = dataJson.optString("md5");
         long fileSize = dataJson.optLong("fileSize");
-        return Version.valueOf(serviceVersion, description, downloadUrl, "", fileSize);
+        return Version.valueOf(serviceVersion, description, downloadUrl, md5, fileSize);
     }
 }

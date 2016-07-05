@@ -12,6 +12,6 @@ public interface SystemUpdateInteractor extends Interactor {
 
     public Observable<Version> checkNewVersion(String uniqueId, String localVersion, String channel);
 
-    public Observable<Download> download(String url, String filePath, long fileSize);
+    public Observable<Download> download(String url, String filePath, long fileSize, String md5);
 
 }

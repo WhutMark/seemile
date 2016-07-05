@@ -5,14 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 import android.os.RecoverySystem;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.seemile.launcher.domain.Download;
 import com.seemile.launcher.domain.interactor.SystemUpdateInteractor;
 import com.seemile.launcher.exception.NetworkError;
-import com.seemile.launcher.util.AppUtils;
 import com.seemile.launcher.util.ExecutorUtils;
 import com.seemile.launcher.util.Logger;
 import com.seemile.launcher.util.NetworkUtils;
@@ -33,8 +32,6 @@ public class SystemUpdateService {
 
     public static final String ROM_FILE_NAME = "rom.zip";
 
-    public static String DOWNLOAD_FILE_PATH = "cache/" + ROM_FILE_NAME;
-
     private Context context;
 
     private static SystemUpdateService sInstance;
@@ -54,7 +51,6 @@ public class SystemUpdateService {
     private SystemUpdateService(Context context) {
         this.context = context.getApplicationContext();
 
-        //DOWNLOAD_FILE_PATH = context.getCacheDir() + "/" + ROM_FILE_NAME;
         interactor = new SystemUpdateImpl();
         localStore = new SystemUpdateLocalStore(this.context);
         localVersion = SystemUtils.getVersion();
@@ -133,17 +129,31 @@ public class SystemUpdateService {
         }
     }
 
+    String getDownloadFilePath() {
+        File fileDir;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            fileDir = new File(Environment.getExternalStorageDirectory(), "/seemile");
+        } else {
+            fileDir = new File("/data/seemile/");
+        }
+        if (!fileDir.exists()) {
+            fileDir.mkdirs();
+        }
+        return new File(fileDir, ROM_FILE_NAME).getPath();
+    }
+
     void startDownload() {
         Logger.i(TAG, "startDownload : " + isDownloading);
         if (canDownload()) {
             isDownloading = true;
-            final String downloadFileName = DOWNLOAD_FILE_PATH;
+            final String downloadFileName = getDownloadFilePath();
             final String url = updateInfo.getVersion().getDownloadUrl();
             final long fileSize = updateInfo.getVersion().getSize();
+            final String md5 = updateInfo.getVersion().getMd5();
             Logger.i(TAG, "startDownload : " + updateInfo.getVersion().toString());
             updateInfo.startDownload(downloadFileName, null);
             localStore.saveUpdateInfo(updateInfo);
-            interactor.download(url, downloadFileName, fileSize).subscribe(new Subscriber<Download>() {
+            interactor.download(url, downloadFileName, fileSize, md5).subscribe(new Subscriber<Download>() {
                 @Override
                 public void onCompleted() {
                     isDownloading = false;

@@ -30,11 +30,12 @@ class SystemUpdateImpl implements SystemUpdateInteractor {
     }
 
     @Override
-    public Observable<Download> download(String url, String filePath, long fileSize) {
+    public Observable<Download> download(String url, String filePath, long fileSize, String md5) {
         DownloadEngine engine = new DownloadEngine(
                 url,
                 filePath,
-                fileSize);
+                fileSize,
+                md5);
         return engine.start();
     }
 }

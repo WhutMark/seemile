@@ -16,7 +16,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_movies_play.png",
           "bgUrl": "",
-          "url":"app://android.rk.RockVideoPlayer"
+          "url":"app://com.molitv.android/com.molitv.android.activity.LauncherActivity"
         },
         {
           "id": 1002,
@@ -87,7 +87,7 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_system_settings.png",
           "bgUrl": "",
-          "url": "app://com.rk_itvui.settings"
+          "url": "app://com.android.settings/com.android.settings.Settings"
         }
       ]
     }

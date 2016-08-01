@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import com.seemile.launcher.Constants;
 import com.seemile.launcher.R;
 import com.seemile.launcher.domain.ItemInfo;
 import com.seemile.launcher.util.AppUtils;
@@ -24,6 +25,7 @@ public class HomeInfo extends ItemInfo {
     public String bgUrl;
     public String iconUrl;
     public String url;
+    public int appType;
 
     private Entry entry = new Entry();
 
@@ -67,13 +69,17 @@ public class HomeInfo extends ItemInfo {
             String[] components = name.split("/");
             if (components != null) {
                 if (components.length > 1) {
-                    return getActivity(new ComponentName(components[0], components[1]));
+                    Intent intent = getActivity(new ComponentName(components[0], components[1]));
+                    intent.putExtra(Constants.APP_TYPE, appType);
+                    return intent;
                 } else if (components.length > 0) {
                     String packageName = components[0];
                     List<ResolveInfo> resolveInfoList = AppUtils.getAppLauncherInfo(packageName);
                     if (resolveInfoList != null && resolveInfoList.size() > 0) {
                         ResolveInfo info = resolveInfoList.get(0);
-                        return getMainActivity(new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name));
+                        Intent intent = getMainActivity(new ComponentName(info.activityInfo.applicationInfo.packageName, info.activityInfo.name));
+                        intent.putExtra(Constants.APP_TYPE, appType);
+                        return intent;
                     }
                 }
             }

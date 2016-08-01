@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.seemile.launcher.Constants;
 import com.seemile.launcher.R;
 import com.seemile.launcher.domain.app.AppInfo;
 import com.seemile.launcher.domain.app.AppItemInfo;
@@ -36,6 +37,8 @@ public class AppsActivity extends BaseActivity implements View.OnClickListener {
 
         mInflater = LayoutInflater.from(this);
 
+        int appType = getIntent() != null ? getIntent().getIntExtra(Constants.APP_TYPE, 0) : 0;
+
         Subscriber<List<AppItemInfo>> subscriber = new Subscriber<List<AppItemInfo>>() {
             @Override
             public void onNext(List<AppItemInfo> itemInfoList) {
@@ -54,7 +57,7 @@ public class AppsActivity extends BaseActivity implements View.OnClickListener {
             public void onError(Throwable e) {
             }
         };
-        AppsService.getInstance(this).getGameAppList().subscribe(subscriber);
+        AppsService.getInstance(this).getAppListBy(appType).subscribe(subscriber);
     }
 
     void addAppItemToCellLayout(AppItemInfo itemInfo) {

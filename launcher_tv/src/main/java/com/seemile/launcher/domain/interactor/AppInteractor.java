@@ -13,7 +13,9 @@ public interface AppInteractor {
 
     Observable<List<AppItemInfo>> getGameAppList();
 
-    Observable<List<AppItemInfo>> getVideoAppList();
+    Observable<List<AppItemInfo>> getMoviesAppList();
 
     Observable<List<AppItemInfo>> getAllAppList();
+
+    Observable<List<AppItemInfo>> getAppListBy(int appType);
 }

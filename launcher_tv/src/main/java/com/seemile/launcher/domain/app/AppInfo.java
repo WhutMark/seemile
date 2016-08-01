@@ -50,6 +50,7 @@ public class AppInfo {
         this.setActivity(componentName, Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 
+        Log.e(TAG, componentName.toShortString());
         try {
             int appFlags = pm.getApplicationInfo(packageName, 0).flags;
             if ((appFlags & android.content.pm.ApplicationInfo.FLAG_SYSTEM) == 0) {

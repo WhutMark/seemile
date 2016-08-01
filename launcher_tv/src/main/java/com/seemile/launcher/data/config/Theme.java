@@ -19,8 +19,8 @@ public class Theme {
         return "theme2/_game_page.json";
     }
 
-    public static String getVideoPagePath() {
-        return "theme2/_game_page.json";
+    public static String getMoviesPagePath() {
+        return "theme2/_movies_page.json";
     }
 
     public static int getHomeCountX() {

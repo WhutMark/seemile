@@ -5,9 +5,10 @@
       "title": "首页",
       "items": [
         {
-          "id": 1001,
+          "id": 1000,
           "title": "影视播放",
           "itemType": 1,
+          "appType": 20000,
           "screen": 0,
           "container": 1000,
           "cellX": 0,
@@ -16,12 +17,13 @@
           "spanY": 1,
           "iconUrl": "assets://theme2/icon/ic_movies_play.png",
           "bgUrl": "",
-          "url":"app://com.molitv.android/com.molitv.android.activity.LauncherActivity"
+          "url":"app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
         },
         {
-          "id": 1002,
+          "id": 1001,
           "title": "游戏天地",
           "itemType": 1,
+          "appType": 10000,
           "screen": 0,
           "container": 1000,
           "cellX": 1,
@@ -33,7 +35,7 @@
           "url": "app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
         },
         {
-          "id": 1003,
+          "id": 1002,
           "title": "全部应用",
           "itemType": 1,
           "screen": 0,
@@ -47,7 +49,7 @@
           "url": "app://com.rk_itvui.allapp"
         },
         {
-          "id": 1004,
+          "id": 1003,
           "title": "U盘播放",
           "itemType": 1,
           "screen": 0,
@@ -61,7 +63,7 @@
           "url": "app://com.android.rockchip"
         },
         {
-          "id": 1005,
+          "id": 1004,
           "title": "多屏互动",
           "itemType": 1,
           "screen": 0,
@@ -76,7 +78,7 @@
 
         },
         {
-          "id": 1006,
+          "id": 1005,
           "title": "系统设置",
           "itemType": 1,
           "screen": 0,

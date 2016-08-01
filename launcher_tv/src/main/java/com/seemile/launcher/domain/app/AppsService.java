@@ -3,6 +3,7 @@ package com.seemile.launcher.domain.app;
 import android.content.ComponentName;
 import android.content.Context;
 
+import com.seemile.launcher.Constants;
 import com.seemile.launcher.data.cache.IconCache;
 import com.seemile.launcher.data.config.Theme;
 import com.seemile.launcher.domain.interactor.AppInteractor;
@@ -82,13 +83,13 @@ public class AppsService implements AppInteractor {
     }
 
     @Override
-    public Observable<List<AppItemInfo>> getVideoAppList() {
+    public Observable<List<AppItemInfo>> getMoviesAppList() {
         Observable<List<AppItemInfo>> observable = Observable.create(
                 new Observable.OnSubscribe<List<AppItemInfo>>() {
                     @Override
                     public void call(Subscriber<? super List<AppItemInfo>> sub) {
                         try {
-                            List<AppItemInfo> appItemInfoList = mLocalStore.getAppItemList(mContext, Theme.getVideoPagePath());
+                            List<AppItemInfo> appItemInfoList = mLocalStore.getAppItemList(mContext, Theme.getMoviesPagePath());
                             sub.onNext(appItemInfoList);
                             sub.onCompleted();
                         } catch (IOException e) {
@@ -112,6 +113,18 @@ public class AppsService implements AppInteractor {
                 }
         ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
         return observable;
+    }
+
+    @Override
+    public Observable<List<AppItemInfo>> getAppListBy(int appType) {
+        switch (appType) {
+            case Constants.APP_TYPE_GAME:
+                return getGameAppList();
+            case Constants.APP_TYPE_MOVIES:
+                return getMoviesAppList();
+            default:
+                return getAllAppList();
+        }
     }
 
     public AppInfo getAppInfo(AppItemInfo itemInfo) {

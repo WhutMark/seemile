@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "id": 20000,
+      "itemType": 1,
+      "screen": 0,
+      "container": 20000,
+      "cellX": 0,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "cn.cibntv.ott",
+      "className":"cn.cibntv.ott.Bootloader"
+    },
+    {
+      "id": 20001,
+      "itemType": 1,
+      "screen": 0,
+      "container": 20000,
+      "cellX": 1,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.cibn.tv",
+      "className":"com.cibn.tv.WelcomeActivity"
+    },
+    {
+      "id": 20002,
+      "itemType": 1,
+      "screen": 0,
+      "container": 20000,
+      "cellX": 2,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.molitv.android",
+      "className": "com.molitv.android.activity.LauncherActivity"
+    },
+    {
+      "id": 20003,
+      "itemType": 1,
+      "screen": 0,
+      "container": 20000,
+      "cellX": 3,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.togic.livevideo",
+      "className":"com.togic.launcher.SplashActivity"
+    },
+    {
+      "id": 20004,
+      "itemType": 1,
+      "screen": 0,
+      "container": 20000,
+      "cellX": 4,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.elinkway.dianshijia.zhibo",
+      "className":"com.elinkway.tvlive2.activity.SplashActivity"
+    }
+  ]
+}

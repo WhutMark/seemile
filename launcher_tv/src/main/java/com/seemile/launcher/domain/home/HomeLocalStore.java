@@ -66,6 +66,8 @@ class HomeLocalStore {
                                         itemInfo.bgUrl = reader.nextString();
                                     } else if ("url".equals(name)) {
                                         itemInfo.url = reader.nextString();
+                                    } else if ("appType".equals(name)) {
+                                        itemInfo.appType = reader.nextInt();
                                     } else {
                                         reader.skipValue();
                                     }

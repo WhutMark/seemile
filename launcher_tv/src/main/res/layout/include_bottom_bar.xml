@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:background="@color/transparent_10"
     android:paddingLeft="@dimen/font_huge"
     android:paddingRight="@dimen/font_huge">
 
@@ -12,7 +11,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="www.seemile.com.cn"
-        android:textColor="@color/gray"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_small" />
 
 </RelativeLayout>

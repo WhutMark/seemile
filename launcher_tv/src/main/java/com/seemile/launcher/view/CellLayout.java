@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.seemile.launcher.R;
 import com.seemile.launcher.util.Logger;
 
@@ -18,6 +19,10 @@ import com.seemile.launcher.util.Logger;
 public class CellLayout extends ViewGroup implements View.OnFocusChangeListener {
 
     private static final String TAG = "CellLayout";
+
+    private static final float FOCUSED_SCALE = 1.15f;
+    private static final float NORMAL_SCALE = 1.0f;
+    private static final long ANIMTION_DURATION = 400;
 
     protected int mCellWidth;
     protected int mCellHeight;
@@ -529,8 +534,18 @@ public class CellLayout extends ViewGroup implements View.OnFocusChangeListener 
             bLp.width = lp.width + mBorderPadding.left + mBorderPadding.right;
             bLp.height = lp.height + mBorderPadding.top + mBorderPadding.bottom;
             mBorderView.setVisibility(VISIBLE);
+//            mBorderView.setScaleX(NORMAL_SCALE);
+//            mBorderView.setScaleY(NORMAL_SCALE);
+            ViewPropertyAnimator.animate(mBorderView).scaleX(NORMAL_SCALE).scaleY(NORMAL_SCALE).setDuration(0).start();
+
+            ViewPropertyAnimator.animate(mBorderView).scaleX(FOCUSED_SCALE).scaleY(FOCUSED_SCALE).setDuration(ANIMTION_DURATION).start();
+            mBorderView.invalidate();
             mBorderView.requestLayout();
         }
+
+        ViewPropertyAnimator.animate(v).scaleX(hasFocus ? FOCUSED_SCALE : NORMAL_SCALE).scaleY(hasFocus ? FOCUSED_SCALE : NORMAL_SCALE).setDuration(ANIMTION_DURATION).start();
+        v.invalidate();
+        v.requestLayout();
     }
 
     public static class LayoutParams extends MarginLayoutParams {

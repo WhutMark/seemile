@@ -39,4 +39,6 @@ dependencies {
 
     // gson
     compile 'com.google.code.gson:gson:2.+'
+
+    compile 'com.nineoldandroids:library:2.4.0'
 }

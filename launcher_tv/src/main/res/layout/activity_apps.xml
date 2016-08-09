@@ -12,14 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/spacing_huge"
-        android:paddingLeft="@dimen/spacing_huge"
-        android:paddingRight="@dimen/spacing_huge"
-        android:paddingTop="@dimen/spacing_huge"
+        android:paddingBottom="80dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:paddingTop="80dp"
         app:countX="7"
         app:countY="2"
-        app:heightGap="@dimen/spacing_small"
-        app:widthGap="@dimen/spacing_small" />
+        app:heightGap="16dp"
+        app:widthGap="16dp" />
 
     <include layout="@layout/include_bottom_bar" />
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dp"
+    android:layout_height="110dp"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/font_huge"
-    android:paddingRight="@dimen/font_huge">
+    android:paddingLeft="80dp"
+    android:paddingRight="80dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/ic_logo" />
     </LinearLayout>
 
@@ -29,14 +29,14 @@
         <com.seemile.launcher.view.TimeView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="16dp"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_small" />
+            android:textSize="24dp" />
 
         <com.seemile.launcher.view.NetworkView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="16dp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="60dp"
-        android:paddingLeft="@dimen/spacing_large"
-        android:paddingRight="@dimen/spacing_large"
-        android:paddingTop="40dp"
-        app:heightGap="12dp"
-        app:widthGap="12dp" />
+        android:paddingBottom="120dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp"
+        android:paddingTop="80dp"
+        app:heightGap="20dp"
+        app:widthGap="20dp" />
 
     <include layout="@layout/include_bottom_bar" />
 

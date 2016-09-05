@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:paddingLeft="80dp"
-    android:paddingRight="80dp">
+    android:layout_height="@dimen/bottom_bar_height"
+    android:paddingLeft="@dimen/spacing_huge"
+    android:paddingRight="@dimen/spacing_huge">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,6 +12,6 @@
         android:gravity="center"
         android:text="www.seemile.com.cn"
         android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:textSize="@dimen/font_small" />
 
 </RelativeLayout>

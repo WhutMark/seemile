@@ -20,16 +20,16 @@
 
         <TextView
             android:id="@id/tv_title"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="@dimen/spacing_smaller"
+            android:paddingRight="@dimen/spacing_smaller"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/img_icon"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_tiny"
             android:ellipsize="marquee"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="@dimen/font_small" />
 
     </LinearLayout>
 

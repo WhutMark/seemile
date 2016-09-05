@@ -8,7 +8,7 @@
         android:id="@id/compat_dlg_title_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="80dp">
+        android:minHeight="@dimen/compat_dlg_title_panel_min_height">
 
         <TextView
             android:id="@id/compat_dlg_title"
@@ -23,7 +23,7 @@
         android:id="@id/compat_dlg_content_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="@dimen/spacing_smaller"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -45,8 +45,8 @@
         android:id="@id/compat_dlg_custom_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="@dimen/spacing_smaller"
+        android:layout_marginTop="@dimen/spacing_smaller"
         android:layout_weight="1"
         android:visibility="gone" />
 
@@ -55,7 +55,7 @@
         android:id="@id/compat_dlg_btn_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="96dip"
+        android:minHeight="@dimen/compat_dlg_button_panel_min_height"
         android:orientation="vertical">
 
         <LinearLayout

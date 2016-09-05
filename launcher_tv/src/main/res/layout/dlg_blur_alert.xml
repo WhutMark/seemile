@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="40dp">
+            android:padding="@dimen/spacing_large">
 
             <RelativeLayout
                 android:id="@id/compat_dlg_title_panel"
@@ -36,8 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingBottom="24dp"
-                android:paddingTop="24dp">
+                android:paddingBottom="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_normal">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="24dp">
+                android:paddingTop="@dimen/spacing_normal">
 
                 <Button
                     android:id="@id/compat_dlg_positive_btn"

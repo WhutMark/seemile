@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CellLayout">
+        <attr name="cellWidth" format="dimension|reference" />
+        <attr name="cellHeight" format="dimension|reference" />
+        <attr name="widthGap" format="dimension|reference" />
+        <attr name="heightGap" format="dimension|reference" />
+        <attr name="countX" format="integer|reference" />
+        <attr name="countY" format="integer|reference" />
+        <attr name="fixedCountX" format="boolean|reference" />
+        <attr name="fixedCountY" format="boolean|reference" />
+    </declare-styleable>
+</resources>

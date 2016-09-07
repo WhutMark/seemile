@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_home_hor_margin">40dp</dimen>
+
+    <!-- font sizes -->
+    <dimen name="font_huge">22sp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+
+    <!-- typical spacing between two views -->
+    <dimen name="spacing_huger">60dp</dimen>
+    <dimen name="spacing_huge">40dp</dimen>
+    <dimen name="spacing_large">20dp</dimen>
+    <dimen name="spacing_normal">12dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_smaller">6dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+
+    <dimen name="icon_size">48dp</dimen>
+
+    <!--dlg-->
+    <dimen name="compat_dlg_title_panel_min_height">40dp</dimen>
+    <dimen name="compat_dlg_button_panel_min_height">48dp</dimen>
+    <dimen name="compat_alert_dlg_btn_min_height">36dp</dimen>
+    <dimen name="compat_alert_dlg_btn_min_width">100dp</dimen>
+
+
+    <!--Bar-->
+    <dimen name="bottom_bar_height">40dp</dimen>
+    <dimen name="top_bar_height">55dp</dimen>
+
+</resources>

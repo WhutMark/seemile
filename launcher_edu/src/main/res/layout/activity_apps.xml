@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_top_bar" />
+
+    <com.seemile.launcher.view.CellLayout
+        android:id="@+id/app_cell_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/activity_home_hor_margin"
+        app:countX="7"
+        app:countY="2"
+        app:heightGap="@dimen/spacing_small"
+        app:widthGap="@dimen/spacing_small" />
+
+    <include layout="@layout/include_bottom_bar" />
+
+</LinearLayout>
+

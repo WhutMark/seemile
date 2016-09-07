@@ -1,1 +1,1 @@
-include ':launcher_tv', ':remote_controller_client', ':remote_controller_server', ':remote_controller_common', ':screen_resolution'
+include ':launcher_tv', ':remote_controller_client', ':remote_controller_server', ':remote_controller_common', ':screen_resolution', ':launcher_edu', ':launcher_common'

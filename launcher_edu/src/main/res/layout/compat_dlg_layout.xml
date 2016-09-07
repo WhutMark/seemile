@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@id/compat_dlg_title_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/compat_dlg_title_panel_min_height">
+
+        <TextView
+            android:id="@id/compat_dlg_title"
+            style="?attr/compatTitleTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:singleLine="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@id/compat_dlg_content_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_smaller"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:overScrollMode="ifContentScrolls">
+
+            <TextView
+                android:id="@id/compat_dlg_message"
+                style="?attr/compatMsgTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@id/compat_dlg_custom_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_smaller"
+        android:layout_marginTop="@dimen/spacing_smaller"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:id="@id/compat_dlg_btn_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/compat_dlg_button_panel_min_height"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="?attr/compatBtnBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@id/compat_dlg_negative_btn"
+                style="?attr/compatNegativeBtnStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2" />
+
+            <Button
+                android:id="@id/compat_dlg_neutral_btn"
+                style="?attr/compatNeutralBtnStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2" />
+
+            <Button
+                android:id="@id/compat_dlg_positive_btn"
+                style="?attr/compatPositiveBtnStyle"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="2" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

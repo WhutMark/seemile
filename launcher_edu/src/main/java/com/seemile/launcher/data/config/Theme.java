@@ -8,19 +8,19 @@ public class Theme {
     private static String sHomeDirPath;
 
     public static String getHomeDirPath() {
-        return "theme2";
+        return "theme1";
     }
 
     public static String getHomePagesPath() {
-        return "theme2/_home_pages.json";
+        return "theme1/_home_pages.json";
     }
 
     public static String getGamePagePath() {
-        return "theme2/_game_page.json";
+        return "theme1/_game_page.json";
     }
 
     public static String getMoviesPagePath() {
-        return "theme2/_movies_page.json";
+        return "theme1/_movies_page.json";
     }
 
     public static int getHomeCountX() {
@@ -28,7 +28,7 @@ public class Theme {
     }
 
     public static int getHomeCountY() {
-        return 1;
+        return 3;
     }
 
 }

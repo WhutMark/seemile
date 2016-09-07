@@ -22,4 +22,7 @@
     <color name="purple">#A051DA</color>
     <color name="green">#00C600</color>
 
+    <!--bar-->
+    <color name="navigation_bar_bg_color">#33000000</color>
+
 </resources>

@@ -542,6 +542,9 @@ public class CellLayout extends ViewGroup implements View.OnFocusChangeListener 
             mBorderView.invalidate();
             mBorderView.requestLayout();
         }
+        if(hasFocus) {
+            v.bringToFront();
+        }
 
         ViewPropertyAnimator.animate(v).scaleX(hasFocus ? FOCUSED_SCALE : NORMAL_SCALE).scaleY(hasFocus ? FOCUSED_SCALE : NORMAL_SCALE).setDuration(ANIMTION_DURATION).start();
         v.invalidate();

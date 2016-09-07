@@ -1,0 +1,97 @@
+{
+  "pages": [
+    {
+      "id": 1000,
+      "title": "首页",
+      "items": [
+        {
+          "id": 1000,
+          "title": "影视播放",
+          "itemType": 1,
+          "appType": 20000,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 0,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_movies_play.png",
+          "bgUrl": "",
+          "url":"app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
+        },
+        {
+          "id": 1001,
+          "title": "游戏天地",
+          "itemType": 1,
+          "appType": 10000,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 1,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_game.png",
+          "bgUrl": "",
+          "url": "app://com.seemile.launcher/com.seemile.launcher.ui.AppsActivity"
+        },
+        {
+          "id": 1002,
+          "title": "全部应用",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 2,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_all_apps.png",
+          "bgUrl": "",
+          "url": "app://com.rk_itvui.allapp"
+        },
+        {
+          "id": 1003,
+          "title": "U盘播放",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 3,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_usb_play.png",
+          "bgUrl": "",
+          "url": "app://com.android.rockchip"
+        },
+        {
+          "id": 1004,
+          "title": "多屏互动",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 4,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_dlna.png",
+          "bgUrl": "",
+          "url": "app://com.hpplay.happyplay.aw"
+
+        },
+        {
+          "id": 1005,
+          "title": "系统设置",
+          "itemType": 1,
+          "screen": 0,
+          "container": 1000,
+          "cellX": 5,
+          "cellY": 0,
+          "spanX": 1,
+          "spanY": 1,
+          "iconUrl": "assets://theme2/icon/ic_system_settings.png",
+          "bgUrl": "",
+          "url": "app://com.android.settings/com.android.settings.Settings"
+        }
+      ]
+    }
+  ]
+}

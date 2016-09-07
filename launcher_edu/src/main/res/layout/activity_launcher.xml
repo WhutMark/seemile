@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingBottom="@dimen/spacing_huger"
-        android:paddingLeft="@dimen/spacing_huge"
-        android:paddingRight="@dimen/spacing_huge"
-        android:paddingTop="@dimen/spacing_huge"
-        app:heightGap="@dimen/spacing_normal"
-        app:widthGap="@dimen/spacing_normal" />
+        android:paddingBottom="@dimen/spacing_large"
+        android:paddingLeft="@dimen/spacing_huger"
+        android:paddingRight="@dimen/spacing_huger"
+        android:paddingTop="@dimen/spacing_large"
+        app:heightGap="@dimen/spacing_small"
+        app:widthGap="@dimen/spacing_small" />
 
     <include layout="@layout/include_bottom_bar" />
 

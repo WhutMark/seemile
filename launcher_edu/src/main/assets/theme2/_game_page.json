@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "id": 10000,
+      "itemType": 1,
+      "screen": 0,
+      "container": 10000,
+      "cellX": 0,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.youjoy.strugglelandlord",
+      "className":"com.youjoy.strugglelandlord.Strugglelandlord"
+    },
+    {
+      "id": 10001,
+      "itemType": 1,
+      "screen": 0,
+      "container": 10000,
+      "cellX": 1,
+      "cellY": 0,
+      "spanX": 1,
+      "spanY": 1,
+      "packageName": "com.putaolab.ptgame",
+      "className":"com.putaolab.ptgame.MainActivity"
+    }
+  ]
+}
